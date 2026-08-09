@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EdTech Classroom App - Cô Thanh Hương | AI & WebRTC Voice System</title>
+    <meta name="description" content="Hệ thống quản lý lớp học, kho học liệu 14 môn, AI sinh đề tự động Gemini/OpenAI OCR/RAG, WebRTC Voice Recording & Realtime Push Notifications của Cô Thanh Hương.">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- Canvas Confetti Library cho Hiệu ứng Pháo Hoa Chúc Mừng -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+</head>
+<body>
+
+    <!-- ===================================================================
+         1. TOP HEADER NAVIGATION BAR & NOTIFICATION BELL (CHUẨN HÌNH 2)
+         =================================================================== -->
+    <header class="header-top">
+        <div class="header-container">
+            <a href="#" class="logo-brand">
+                <div class="logo-icon">🎓</div>
+                <div class="logo-text">
+                    <h1>EDUTECH CLASSROOM</h1>
+                    <span>Cô Thanh Hương</span>
+                </div>
+            </a>
+
+            <!-- Menu Điều Hướng -->
+            <ul class="nav-links">
+                <li><a href="#" class="nav-item active">TRANG CHỦ</a></li>
+                <li><a href="#activities" class="nav-item">14 MÔN HỌC</a></li>
+                <li><a href="#exercises" class="nav-item">BÀI TẬP AI</a></li>
+                <li><a href="#activities" class="nav-item">KHO HỌC LIỆU</a></li>
+                <li><a href="#activities" class="nav-item">BẢNG XẾP HẠNG</a></li>
+            </ul>
+
+            <div style="display: flex; align-items: center; gap: 16px;">
+                <!-- REALTIME PUSH NOTIFICATION BELL -->
+                <div class="notification-bell-container">
+                    <button class="notification-bell-btn" onclick="toggleNotificationDrawer()">
+                        🔔
+                    </button>
+                    <div id="unread-notification-badge" class="notification-badge">2</div>
+
+                    <!-- NOTIFICATION DRAWER -->
+                    <div id="notification-drawer" class="notification-drawer">
+                        <h4 style="font-size: 15px; font-weight: 800; color: #263238; margin-bottom: 12px; border-bottom: 1px solid #E2E8F0; padding-bottom: 8px; display: flex; justify-content: space-between; align-items: center;">
+                            <span>🔔 THÔNG BÁO REALTIME</span>
+                            <span style="font-size: 10px; color: #00BCD4;">Zalo ZNS / Web Push</span>
+                        </h4>
+                        <div id="notification-items-list" style="display: flex; flex-direction: column; gap: 10px; font-size: 13px;">
+                            <div style="background: #F8FAFC; padding: 10px; border-radius: 8px; border-left: 3px solid #FF5722;">
+                                <strong>📝 Bài tập mới từ Cô Thanh Hương:</strong>
+                                <p style="font-size: 12px; color: #64748B; margin-top: 2px;">Đã phát hành bài kiểm tra Toán 10 AI RAG. Hạn nộp: 23:59 hôm nay.</p>
+                            </div>
+                            <div style="background: #F8FAFC; padding: 10px; border-radius: 8px; border-left: 3px solid #10B981;">
+                                <strong>🎉 Kết quả chấm bài AI:</strong>
+                                <p style="font-size: 12px; color: #64748B; margin-top: 2px;">Em đã đạt điểm 10.0 môn Tiếng Anh và nhận 100 điểm thưởng!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Portal Switcher Button (Chuyển đổi Học sinh <-> Cô Thanh Hương) -->
+                <div class="portal-switcher">
+                    <button id="btn-portal-student" class="portal-btn active-student">🎓 Học Sinh App</button>
+                    <button id="btn-portal-admin" class="portal-btn">👩‍🏫 Góc Cô Thanh Hương</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER CHÍNH CỦA STUDENT WEB APP -->
+    <div id="student-app-view">
+
+        <!-- ===================================================================
+             2. HERO BANNER SECTION (BỐ CỤC CHUẨN BANNER TRƯỜNG HỌC HÌNH 2)
+             =================================================================== -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <span class="hero-badge">HỆ THỐNG QUẢN LÝ LỚP HỌC & AI THÔNG MINH VER 2.0</span>
+                <h1 class="hero-title">SCHOOL EDUCATIONAL & AI CLASSROOM APP</h1>
+                <p class="hero-subtitle">Đồng hành cùng Cô Thanh Hương • Gemini/OpenAI API, RAG SGK 14 Môn & WebRTC Voice Recording</p>
+                <div class="hero-actions">
+                    <button class="btn-primary" onclick="document.getElementById('exercises').scrollIntoView({behavior: 'smooth'})">
+                        📝 LÀM BÀI TẬP NGAY
+                    </button>
+                    <button class="btn-secondary" onclick="alert('📁 [KHO HỌC LIỆU SGK 14 MÔN] Đang kết nối Vector RAG Engine!')">
+                        📚 KHO HỌC LIỆU SGK
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4 THẺ MÀU TRUY CẬP NHANH TRUYỀN THỐNG HÌNH 2 (CYAN, YELLOW, CORAL, EMERALD) -->
+        <div class="hero-cards-container">
+            <div class="hero-cards-grid">
+                <div class="hero-card-block card-cyan" onclick="document.getElementById('activities').scrollIntoView({behavior: 'smooth'})">
+                    <span>📚</span>
+                    <span>14 MÔN HỌC</span>
+                </div>
+                <div class="hero-card-block card-yellow" onclick="document.getElementById('exercises').scrollIntoView({behavior: 'smooth'})">
+                    <span>📝</span>
+                    <span>BÀI TẬP AI</span>
+                </div>
+                <div class="hero-card-block card-coral" onclick="alert('🏆 [BẢNG XẾP HẠNG] Em đang ở Top 1 Học sinh xuất sắc Lớp 10A1!')">
+                    <span>🏆</span>
+                    <span>BẢNG XẾP HẠNG</span>
+                </div>
+                <div class="hero-card-block card-emerald" onclick="alert('👩‍🏫 [CÔ THANH HƯƠNG] Chúc mừng em đã sẵn sàng trải nghiệm WebRTC Voice & Gemini AI!')">
+                    <span>👩‍🏫</span>
+                    <span>CÔ THANH HƯƠNG</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             3. SECTION "OUR ACTIVITIES" - 6 TÍNH NĂNG CHÍNH SƠ ĐỒ KIẾN TRÚC (HÌNH 2)
+             =================================================================== -->
+        <section id="activities" class="section-activities">
+            <div class="section-header">
+                <div class="section-subtitle">OUR ACTIVITIES - HOẠT ĐỘNG & TÍNH NĂNG NỔI BẬT</div>
+                <h2 class="section-title">HỆ THỐNG DỊCH VỤ NGHIỆP VỤ (BACKEND ENGINE)</h2>
+            </div>
+            
+            <div id="activities-grid-container" class="activities-grid">
+                <!-- Render 6 card tính năng -->
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             4. MIDDLE ACTION BANNER
+             =================================================================== -->
+        <div class="middle-banner">
+            <div class="banner-container">
+                <div>
+                    <h3 style="font-size: 24px; font-weight: 800;">HỌC TẬP TƯƠNG TÁC CÙNG AI & WEBRTC VOICE RECORDING</h3>
+                    <p style="font-size: 14px; opacity: 0.9;">Tự động chấm điểm bài làm và nghe lời nhận xét thu âm trực tiếp của Cô Thanh Hương</p>
+                </div>
+                <div class="banner-buttons">
+                    <button class="btn-primary" style="background: white; color: var(--color-slate);" onclick="document.getElementById('exercises').scrollIntoView({behavior: 'smooth'})">
+                        📖 TẤT CẢ BÀI HỌC
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================================
+             5. SEARCH & FILTER BAR (HÌNH 2)
+             =================================================================== -->
+        <section class="filter-section">
+            <div class="filter-tabs">
+                <button class="filter-tab-btn active-tab">📝 BÀI TẬP AI</button>
+                <button class="filter-tab-btn" onclick="alert('📁 Chuyển sang Kho Học Liệu SGK')">📚 HỌC LIỆU SGK</button>
+                <button class="filter-tab-btn" onclick="alert('🤖 Chuyển sang Đề Thi AI OCR')">🤖 ĐỀ THI OCR</button>
+            </div>
+
+            <div class="search-box-bar">
+                <input type="text" id="search-input" class="search-input" placeholder="Nhập từ khóa tìm kiếm bài tập...">
+                <select id="search-subject-select" class="search-select">
+                    <option value="">-- Tất cả 14 Môn --</option>
+                    <option value="Toán Học">Toán Học</option>
+                    <option value="Ngữ Văn">Ngữ Văn</option>
+                    <option value="Tiếng Anh">Tiếng Anh</option>
+                    <option value="Vật Lý">Vật Lý</option>
+                </select>
+                <input type="date" class="search-select">
+                <button id="btn-search-trigger" class="btn-search">SEARCH</button>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             6. SECTION "OUR EVENTS" (4 CARD HÌNH 2)
+             =================================================================== -->
+        <section id="exercises" class="events-section">
+            <div class="section-header">
+                <div class="section-subtitle">OUR EVENTS - BÀI TẬP & SỰ KIỆN NỔI BẬT</div>
+                <h2 class="section-title">DANH SÁCH BÀI KIỂM TRA MỚI NHẤT</h2>
+            </div>
+
+            <div id="events-grid-container" class="events-grid">
+                <!-- Render 4 card bài tập -->
+            </div>
+        </section>
+    </div>
+
+    <!-- CONTAINER CHÍNH CỦA ADMIN PORTAL (GÓC CÔ THANH HƯƠNG) -->
+    <div id="admin-portal-view" style="display: none;">
+        <!-- Render Admin Dashboard -->
+    </div>
+
+    <!-- FOOTER HỆ THỐNG -->
+    <footer style="background-color: var(--color-slate); color: white; padding: 40px 24px; text-align: center; border-top: 4px solid var(--color-cyan);">
+        <p style="font-weight: 700; font-size: 16px; margin-bottom: 8px;">DỰ ÁN CLASSROOM APP • CÔ THANH HƯƠNG</p>
+        <p style="font-size: 13px; opacity: 0.8;">Tích hợp Google Gemini API, WebRTC Voice Recording, Vector RAG SGK 14 Môn & Web Push Notifications.</p>
+        <p style="font-size: 11px; opacity: 0.5; margin-top: 16px;">Học viên: thanhhuongle84 | Xuất bản 2026 | Powered by Super Agent AI</p>
+    </footer>
+
+    <!-- INTERACTIVE QUIZ MODAL CONTAINER -->
+    <div id="modal-overlay" class="modal-overlay" style="display: none;">
+        <div id="modal-container" class="modal-card">
+            <!-- Dynamic Modal Content -->
+        </div>
+    </div>
+
+    <!-- JAVASCRIPT FILES -->
+    <script src="js/mockData.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
