@@ -1,0 +1,31 @@
+{
+  "name": "edutech-classroom-app",
+  "version": "1.0.0",
+  "description": "Hệ thống EdTech Quản lý Lớp học & Bài tập Thông minh - Cô Thanh Hương",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "nodemon server/index.js",
+    "build": "echo 'Build complete'"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "better-sqlite3": "^11.1.2",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  },
+  "keywords": [
+    "edtech",
+    "classroom",
+    "ai-quiz",
+    "ai-grader",
+    "co-thanh-huong"
+  ],
+  "author": "Super Agent EdTech Team",
+  "license": "MIT"
+}
